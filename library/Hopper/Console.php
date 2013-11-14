@@ -76,7 +76,7 @@ class Console {
 		$toolbar = $this->twig->render(
 			'@Hopper/Console/toolbar_js.html.twig',
 			array(
-				'position' => $this->position,
+				'position' => 'bottom',
 				'token' => $this->profile->getToken(),
 			)
 		);

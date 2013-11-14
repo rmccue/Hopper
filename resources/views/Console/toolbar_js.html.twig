@@ -13,7 +13,7 @@
 
 		Sfjs.load(
 			'sfwdt{{ token }}',
-			'{{ path("/wdt/{token}", { "token": token }) }}',
+			'{{ path("/wdt/{token}", { "token": token, "position": "bottom" }) }}',
 			function(xhr, el) {
 				el.style.display = -1 !== xhr.responseText.indexOf('sf-toolbarreset') ? 'block' : 'none';
 
