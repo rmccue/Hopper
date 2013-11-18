@@ -1,6 +1,6 @@
 {% if link %}
     {% set icon %}
-        <a href="{{ path('_profiler', { 'token': token, 'panel': name }) }}">{{ icon }}</a>
+        <a href="{{ path('/{token}', { 'token': token, 'panel': name }) }}">{{ icon }}</a>
     {% endset %}
 {% endif %}
 <div class="sf-toolbar-block">
