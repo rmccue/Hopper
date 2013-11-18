@@ -23,14 +23,9 @@ class Console {
 		$this->twig = new Twig_Environment($templateloader, $options);
 		$this->twig->addFunction(new Twig_SimpleFunction('path', array( $this, 'get_url' ) ));
 		$this->twig->addFunction(new Twig_SimpleFunction('render', function ($url, $params = array()) {
-			// echo wp_debug_backtrace_summary();
 			$query = parse_url($url, PHP_URL_QUERY);
 			parse_str($query, $qvs);
-			// var_dump($qvs);
-			// return $qvs['route'];
 			return $this->route($qvs['route']);
-			// var_dump($routed);
-			// exit;
 		}, array( 'is_safe' => array( 'html' ) )));
 
 		$this->profiler = new Profiler();
