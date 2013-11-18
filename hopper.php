@@ -30,7 +30,6 @@ function setup() {
 	// Load the console itself
 	$loader = new \Twig_Loader_Filesystem( __DIR__ . '/resources/views', 'Hopper' );
 	$loader->addPath( __DIR__ . '/resources/views', 'Hopper' );
-	$loader->addPath( __DIR__ . '/resources/views-symfony', 'WebProfiler' );
 	$console = new Console($loader, $collectors);
 }
 
