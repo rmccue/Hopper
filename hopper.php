@@ -58,6 +58,7 @@ function output_console() {
 function default_collectors( $panels ) {
 	$panels[] = new Components\Config\Collector();
 	$panels[] = new Components\Hooks\Collector();
+	$panels[] = new Components\Memory\Collector();
 
 	return $panels;
 }
@@ -65,6 +66,7 @@ function default_collectors( $panels ) {
 function default_templates( $templates ) {
 	$templates[] = array( 'config', '@Hopper/Collector/config.html.twig' );
 	$templates[] = array( 'hooks', '@Hopper/Collector/hooks.html.twig' );
+	$templates[] = array( 'memory', '@Hopper/Collector/memory.html.twig' );
 
 	return $templates;
 }
