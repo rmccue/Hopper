@@ -6,9 +6,11 @@
 
 namespace Hopper;
 
+// Interface and basic setup
 add_action( 'plugins_loaded',            __NAMESPACE__ . '\\setup' );
 add_action( 'admin_bar_menu',            __NAMESPACE__ . '\\add_menu_item',  1000 );
 
+// Default components
 add_filter( 'hopper_register_collectors', __NAMESPACE__ . '\\default_collectors', -10 );
 add_filter( 'hopper_templates',           __NAMESPACE__ . '\\default_templates', -10 );
 
