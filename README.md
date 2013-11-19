@@ -15,6 +15,35 @@ and debugger around.
 [Debug Bar]: http://wordpress.org/plugins/debug-bar/
 
 
+How do I use this?
+------------------
+### Installing
+Download the plugin from this repository, then install the dependencies with
+`composer install`.
+
+### Usage
+After activation, load any page. You should see the Symfony toolbar appear on
+the page.
+
+
+Using Hopper's features
+-----------------------
+
+### Logging
+Hopper offers a PSR-3 compatible logger interface that stores messages with the
+request data, and displays them in the Hopper interface.
+
+To get the current global logger:
+
+```php
+$logger = apply_filters( 'hopper_logger', null );
+```
+
+If Hopper is disabled, your code will continue to function correctly as long as
+you check for null values. Using a filter for this ensures that your code does
+not depend on Hopper, which is important for production environments.
+
+
 What's with the name?
 ---------------------
 Hopper is named for the legendary [Grace Hopper][] who was a pioneer in the
