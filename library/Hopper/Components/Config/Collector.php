@@ -27,12 +27,11 @@ class Collector extends \Hopper\Collector\Collector {
 
 		$this->data = array(
 			'app_name'             => $this->name,
-			'app_version'          => $wp_version,
 			'token'                => $headers['X-Debug-Token'],
-			'wp_version'           => '',
+			'wp_version'           => $wp_version,
 			'name'                 => isset($this->kernel) ? $this->kernel->getName() : 'n/a',
 			'env'                  => isset($this->kernel) ? $this->kernel->getEnvironment() : 'n/a',
-			'debug'                => isset($this->kernel) ? $this->kernel->isDebug() : 'n/a',
+			'debug'                => WP_DEBUG,
 			'php_version'          => PHP_VERSION,
 			'xdebug_enabled'       => extension_loaded('xdebug'),
 			'eaccel_enabled'       => extension_loaded('eaccelerator') && ini_get('eaccelerator.enable'),
@@ -49,10 +48,6 @@ class Collector extends \Hopper\Collector\Collector {
 		return $this->data['app_name'];
 	}
 
-	public function getApplicationVersion() {
-		return $this->data['app_version'];
-	}
-
 	/**
 	 * Gets the token.
 	 *
@@ -67,8 +62,8 @@ class Collector extends \Hopper\Collector\Collector {
 	 *
 	 * @return string The Symfony version
 	 */
-	public function getSymfonyVersion() {
-		return $this->data['symfony_version'];
+	public function getWPVersion() {
+		return $this->data['wp_version'];
 	}
 
 	/**
