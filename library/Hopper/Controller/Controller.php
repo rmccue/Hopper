@@ -20,6 +20,11 @@ abstract class Controller {
 
 	protected function response($data, $code, array $headers = array()) {
 		status_header( $code );
+
+		if (!isset($headers['Content-Type'])) {
+			$headers['Content-Type'] = 'text/html';
+		}
+
 		foreach ($headers as $key => $value) {
 			header(sprintf('%s: %s', $key, $value));
 		}
