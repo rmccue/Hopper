@@ -42,29 +42,6 @@ class Console {
 		add_action( 'shutdown',                  array( $this, 'save_profile' ), 1000 );
 	}
 
-	public function add_panels( array $panels ) {
-		return;
-
-		foreach ( $panels as $id => $panel ) {
-			if ( is_string( $panel ) ) {
-				$panel = new $panel( $this->twig, $this->templatemanager );
-			}
-
-			$this->panels[ $id ] = $panel;
-		}
-	}
-
-	public function add_menu_item( $wp_admin_bar ) {
-		$wp_admin_bar->add_menu( array(
-			'id'        => 'hopper-open-console',
-			'parent'    => 'top-secondary',
-			'title'     => __( 'Console', 'hopper' ),
-			'meta'      => array(
-				'title'     => __( 'Open Hopper debug console', 'hopper' ),
-			),
-		) );
-	}
-
 	public function render() {
 		$output = array();
 
@@ -78,21 +55,6 @@ class Console {
 			)
 		);
 		echo $toolbar;
-
-		/*foreach ( $profile->all() as $collector ) {
-			$data = $collector->collector();
-			$data = array(
-				'token' => $profile->getToken(),
-				'profile' => $profile,
-				'collector' => $profile->getCollector($panel),
-				'panel' => $panel,
-				'page' => $page,
-				'request' => $request,
-				'templates' => $this->getTemplateManager()->getTemplates($profile),
-				'is_ajax' => $request->isXmlHttpRequest(),
-			))
-			echo $this->twig->render($this->templatemanager->getName($profile, $panel), $data);
-		}*/
 	}
 
 	public function save_profile() {
