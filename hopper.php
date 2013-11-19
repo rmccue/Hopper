@@ -14,6 +14,9 @@ add_action( 'admin_bar_menu',            __NAMESPACE__ . '\\add_menu_item',  100
 add_filter( 'hopper_register_collectors', __NAMESPACE__ . '\\default_collectors', -10 );
 add_filter( 'hopper_templates',           __NAMESPACE__ . '\\default_templates', -10 );
 
+// Public API
+add_filter( 'hopper_logger', __NAMESPACE__ . '\\logger' );
+
 function setup() {
 	// Include Composer's autoloader
 	include __DIR__ . '/vendor/autoload.php';
@@ -60,6 +63,7 @@ function output_console() {
 function default_collectors( $panels ) {
 	$panels[] = new Components\Config\Collector();
 	$panels[] = new Components\Hooks\Collector();
+	$panels[] = new Components\Logger\Collector( apply_filters( 'hopper_logger', null ) );
 	$panels[] = new Components\Memory\Collector();
 
 	return $panels;
@@ -68,6 +72,7 @@ function default_collectors( $panels ) {
 function default_templates( $templates ) {
 	$templates[] = array( 'config', '@Hopper/Collector/config.html.twig' );
 	$templates[] = array( 'hooks', '@Hopper/Collector/hooks.html.twig' );
+	$templates[] = array( 'logger', '@Hopper/Collector/logger.html.twig' );
 	$templates[] = array( 'memory', '@Hopper/Collector/memory.html.twig' );
 
 	return $templates;
@@ -116,3 +121,18 @@ function debug_backtrace_summary( $trace, $pretty = true ) {
 }
 
 set_exception_handler(__NAMESPACE__ . '\\exception_handler');
+
+/**
+ * Get request logger instance
+ *
+ * @return Hopper\Component\Logger\Logger
+ */
+function logger() {
+	static $logger = null;
+
+	if ( empty( $logger ) ) {
+		$logger = new Components\Logger\Logger();
+	}
+
+	return $logger;
+}

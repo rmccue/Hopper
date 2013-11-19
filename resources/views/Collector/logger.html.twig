@@ -1,4 +1,4 @@
-{% extends '@Hoppe/Profiler/layout.html.twig' %}
+{% extends '@Hopper/Console/layout.html.twig' %}
 
 {% import _self as logger %}
 
@@ -54,12 +54,12 @@
         <tr>
             <th>Filter</th>
             <td>
-                <form id="priority-form" action="" method="get" style="display: inline">
+                <form id="priority-form" action="{{ path('/{token}', { 'token': token }) }}" method="get" style="display: inline">
                     <input type="hidden" name="panel" value="logger">
                     <label for="priority">Priority</label>
                     <select id="priority" name="priority" onchange="document.getElementById('priority-form').submit(); ">
                         {# values < 0 are custom levels #}
-                        {% for value, text in { 100: 'DEBUG', 200: 'INFO', 250: 'NOTICE', 300: 'WARNING', 400: 'ERROR', 500: 'CRITICAL', 550: 'ALERT', 600: 'EMERGENCY', '-100': 'DEPRECATION only' } %}
+                        {% for value, text in { 'debug': 'Debug', 'info': 'Info', 'notice': 'Notice', 'warning': 'Warning', 'error': 'ERROR', 'critical': 'CRITICAL', 'alert': 'ALERT', 'emergency': 'EMERGENCY', 'deprecated': 'Deprecated' } %}
                             <option value="{{ value }}"{{ value == priority ? ' selected' : '' }}>{{ text }}</option>
                         {% endfor %}
                     </select>
@@ -90,15 +90,15 @@
 
 
 {% macro display_message(log_index, log) %}
-    {% if constant('Symfony\\Component\\HttpKernel\\Debug\\ErrorHandler::TYPE_DEPRECATION') == log.context.type|default(0) %}
+    {% if constant('Hopper\\Components\\Logger\\Level::DEPRECATED') == log.level|default('debug') %}
         DEPRECATION -  {{ log.message }}
         {% set id = 'sf-call-stack-' ~ log_index %}
         <a href="#" onclick="Sfjs.toggle('{{ id }}', document.getElementById('{{ id }}-on'), document.getElementById('{{ id }}-off')); return false;">
             <img class="toggle" id="{{ id }}-off" alt="-" src="data:image/gif;base64,R0lGODlhEgASAMQSANft94TG57Hb8GS44ez1+mC24IvK6ePx+Wa44dXs92+942e54o3L6W2844/M6dnu+P/+/l614P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABIALAAAAAASABIAQAVCoCQBTBOd6Kk4gJhGBCTPxysJb44K0qD/ER/wlxjmisZkMqBEBW5NHrMZmVKvv9hMVsO+hE0EoNAstEYGxG9heIhCADs=" style="display:none">
             <img class="toggle" id="{{ id }}-on" alt="+" src="data:image/gif;base64,R0lGODlhEgASAMQTANft99/v+Ga44bHb8ITG52S44dXs9+z1+uPx+YvK6WC24G+944/M6W28443L6dnu+Ge54v/+/l614P///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABMALAAAAAASABIAQAVS4DQBTiOd6LkwgJgeUSzHSDoNaZ4PU6FLgYBA5/vFID/DbylRGiNIZu74I0h1hNsVxbNuUV4d9SsZM2EzWe1qThVzwWFOAFCQFa1RQq6DJB4iIQA7" style="display:inline">
         </a>
-        {% for index, call in log.context.stack if index > 1 %}
-            {% if index == 2 %}
+        {% for index, call in log.context.stack %}
+            {% if index == 0 %}
                 <ul class="sf-call-stack" id="{{ id }}" style="display: none">
             {% endif %}
             {% if call.class is defined %}
