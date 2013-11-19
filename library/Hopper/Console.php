@@ -8,6 +8,7 @@ use Twig_SimpleFunction;
 
 use Hopper\TemplateManager;
 use Hopper\Profiler\Profiler;
+use Hopper\Twig\CodeExtension;
 
 class Console {
 	protected $panels = array();
@@ -27,6 +28,7 @@ class Console {
 			parse_str($query, $qvs);
 			return $this->route($qvs['route']);
 		}, array( 'is_safe' => array( 'html' ) )));
+		$this->twig->addExtension(new CodeExtension(null, ABSPATH, 'UTF-8'));
 
 		$this->profiler = new Profiler();
 		foreach ($collectors as $collector) {
