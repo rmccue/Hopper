@@ -21,7 +21,7 @@ abstract class Controller {
 	protected function response($data, $code, array $headers = array()) {
 		status_header( $code );
 		foreach ($headers as $key => $value) {
-			header($key, $value);
+			header(sprintf('%s: %s', $key, $value));
 		}
 
 		return $data;
