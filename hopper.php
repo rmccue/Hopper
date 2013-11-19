@@ -57,12 +57,14 @@ function output_console() {
 
 function default_collectors( $panels ) {
 	$panels[] = new Components\Config\Collector();
+	$panels[] = new Components\Hooks\Collector();
 
 	return $panels;
 }
 
 function default_templates( $templates ) {
 	$templates[] = array( 'config', '@Hopper/Collector/config.html.twig' );
+	$templates[] = array( 'hooks', '@Hopper/Collector/hooks.html.twig' );
 
 	return $templates;
 }
