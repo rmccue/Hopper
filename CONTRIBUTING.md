@@ -19,3 +19,17 @@ its equivalent template. The template should be ported as-is for the most part,
 and you should change the collector rather than the template where possible.
 
 [Symfony collector configuration]: https://github.com/symfony/symfony/blob/master/src/Symfony/Bundle/FrameworkBundle/Resources/config/collectors.xml
+
+
+Hopper's internal workflow
+--------------------------
+Here's how Hopper works internally:
+
+* You request a monitorable page (admin/front end page, excluding Ajax requests)
+* Hopper initialises its components and asks them to collect data
+* Hopper adds an item to the admin bar, plus Javascript
+* WordPress renders the page
+* Hopper sends a final late collection notice to any registered late collectors
+* Hopper saves all collected data for the request
+* Your browser renders the page
+* Hopper's Javascript loads the Hopper UI on to the page
